@@ -126,8 +126,6 @@ pushd "$final_path" || ynh_die
 	
 	./nodebb setup
 
-	./nodebb start
-
 popd || ynh_die
 
 #=================================================
@@ -143,9 +141,6 @@ install_log=/var/log/$app/installation.log
 touch $install_log
 chown $app -R /var/log/$app
 chown admin -R $install_log
-
-
-
 
 #=================================================
 # Add Systemd service
