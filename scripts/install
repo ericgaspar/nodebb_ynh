@@ -106,9 +106,6 @@ touch $install_log
 chown $app -R /var/log/$app
 chown admin -R $install_log
 
-# Configuration de logrotate
-ynh_use_logrotate
-
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -139,8 +136,9 @@ ynh_add_systemd_config
 #=================================================
 # MODIFY A CONFIG FILE	
 #=================================================
+ynh_script_progression --message="Modifying a config file..."
 
-mv ../conf/config.json $final_path/config.json
+cp ../conf/config.json $final_path/config.json
 
 ynh_replace_string --match_string="__URL__"     --replace_string="$domain"  --target_file="$final_path/config.json"
 ynh_replace_string --match_string="__PORT__"    --replace_string="$port"    --target_file="$final_path/config.json"
@@ -149,7 +147,7 @@ ynh_replace_string --match_string="__DB_USER__" --replace_string="$db_user" --ta
 ynh_replace_string --match_string="__DB_NAME"   --replace_string="$db_name" --target_file="$final_path/config.json"
 ynh_replace_string --match_string="__DB_PWD__"  --replace_string="$db_pwd"  --target_file="$final_path/config.json"
 
-cat $final_path/config.json
+ynh_store_file_checksum --file="$final_path/config.json"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -191,7 +189,7 @@ if [ $is_public -eq 1 ]
 then
 	# Everyone can access the app.
 	# The "main" permission is automatically created before the install script.
-	 	ynh_permission_update --permission "main" --add "visitors"
+	ynh_permission_update --permission "main" --add "visitors"
 fi
 
 #=================================================

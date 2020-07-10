@@ -15,7 +15,7 @@
         "url": "https://github.com/Yunohost-Apps/nodebb_ynh"
     },
     "requirements": {
-        "yunohost": ">> 3.0.0"
+        "yunohost": ">> 3.8.1"
     },
     "multi_instance": false,
     "services": [

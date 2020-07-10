@@ -42,11 +42,12 @@ then
 fi
 
 #=================================================
-# REMOVE THE MONGO DATABASE
+# REMOVE THE POSTGRESQL DATABASE
 #=================================================
+ynh_script_progression --message="Removing the PostgreSQL database..." --weight=2
 
-mongo --shell "$dbname" --eval 'db.dropUser("'${dbuser}'", {w: "majority", wtimeout: 5000})' <<< exit
-mongo --shell "$dbname" --eval 'db.runCommand({dropDatabase: 1})' <<< exit
+# Remove a database if it exists, along with the associated user
+ynh_psql_remove_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
 # REMOVE DEPENDENCIES
@@ -68,23 +69,6 @@ ynh_secure_remove "$final_path"
 
 # Remove the dedicated nginx config
 ynh_remove_nginx_config
-
-#=================================================
-# REMOVE LOGROTATE CONFIGURATION
-#=================================================
-
-# Remove the app-specific logrotate config
-ynh_remove_logrotate
-
-#=================================================
-# CLOSE A PORT
-#=================================================
-
-if yunohost firewall list | grep -q "\- $port$"
-then
-	echo "Close port $port"
-	yunohost firewall disallow TCP $port 2>&1
-fi
 
 #=================================================
 # GENERIC FINALIZATION
