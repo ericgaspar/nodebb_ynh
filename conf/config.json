@@ -1,13 +1,13 @@
 {
     "url": "https://__URL__",
     "secret": "__SECRET__",
-    "database": "mongo",
+    "database": "postgres",
     "port": "__PORT__",
-    "mongo": {
+    "postgres": {
         "host": "127.0.0.1",
-        "port": "27017",
-        "username": "dbuser",
-        "password": "dbpass",
-        "database": "dbname"
+        "port": "5432",
+        "username": "__DB_USER__",
+        "password": "__DB_PWD__",
+        "database": "__DB_NAME__"
     }
 }

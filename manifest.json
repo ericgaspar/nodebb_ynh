@@ -2,11 +2,11 @@
     "name": "NodeBB",
     "id": "nodebb",
     "packaging_format": 1,
-    "version": "1.0",
     "description": {
         "en": "Nodejs Forum",
         "fr": "Forum écrit en nodejs"
     },
+    "version": "1.14.1~ynh1",
     "url": "https://nodebb.org/",
     "license": "GPL-3.0",
     "maintainer": {
