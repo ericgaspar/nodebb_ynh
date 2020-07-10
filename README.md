@@ -19,7 +19,7 @@ Quick description of this app.
 
 ## Demo
 
-* [Official demo](Link to a demo site for this app.)
+* [Official demo](https://community.nodebb.org/)
 
 ## Configuration
 

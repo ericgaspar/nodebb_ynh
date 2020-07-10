@@ -13,6 +13,9 @@ source /usr/share/yunohost/helpers
 # MANAGE SCRIPT FAILURE
 #=================================================
 
+ynh_clean_setup () {
+	ynh_clean_check_starting
+}
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
@@ -64,6 +67,7 @@ ynh_script_progression --message="Installing dependencies..." --weight=20
 
 ynh_install_app_dependencies $pkg_dependencies
 
+# Install Nodejs
 ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 
 # Install Yarn
@@ -85,12 +89,46 @@ ynh_psql_test_if_first_run
 ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 
 #=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression --message="Setting up source files..." --time --weight=1
+
+ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$final_path"
+
+#=================================================
+# Nginx configuration
+#=================================================
+ynh_script_progression --message="Configuring nginx web server..." --time --weight=1
+
+# Create a dedicated nginx config
+ynh_add_nginx_config
+
+#=================================================
 # CREATE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Configuring system user..." --weight=3
 
 # Create a system user
 ynh_system_user_create --username=$app --home_dir=$final_path
+
+#=================================================
+# SPECIFIC SETUP
+#==============================================
+# INSTALL CODIMD
+#==============================================
+ynh_script_progression --message="Building $app... (this will take some time and resources!)" --weight=240
+
+pushd "$final_path" || ynh_die
+
+	ynh_use_nodejs
+	
+	./nodebb setup
+
+	./nodebb start
+
+popd || ynh_die
 
 #=================================================
 # SPECIFIC SETUP
@@ -106,22 +144,8 @@ touch $install_log
 chown $app -R /var/log/$app
 chown admin -R $install_log
 
-#=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
-#=================================================
-ynh_script_progression --message="Setting up source files..." --time --weight=1
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$final_path"
 
-#=================================================
-# Modify Nginx configuration file and copy it to Nginx conf directory
-#=================================================
-ynh_script_progression --message="Configuring nginx web server..." --time --weight=1
-
-# Create a dedicated nginx config
-ynh_add_nginx_config
 
 #=================================================
 # Add Systemd service
@@ -159,25 +183,19 @@ ynh_script_progression --message="Securing files and directories..."
 chown -R $app:$app $final_path
 
 #=================================================
-# START NodeBB IN BACKGROUND
-#=================================================
-
-cat /etc/systemd/system/$app.service
-sudo systemctl daemon-reload
-sudo systemctl enable "$app".service
-
-#=================================================
-# START ETHERPAD IN BACKGROUND
-#=================================================
-
-systemctl start $app     # Démarre Nodebb. Le démarrage est fait le plus tôt possible, car il est très long...
-
-#=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --log "/var/log/$app/nodebb.log"
+yunohost service add $app --description "Forum" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --weight=2
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" #--line_match="HTTP Server listening"
 
 #=================================================
 # SETUP SSOWAT
