@@ -129,10 +129,7 @@ ynh_script_progression --message="Building $app... (this will take some time and
 
 pushd "$final_path" || ynh_die
 
-	ynh_use_nodejs
-	 npm i
-	./nodebb setup
-	./nodebb start
+	cd nodebb && setup
 
 popd || ynh_die
 
