@@ -48,7 +48,7 @@ ynh_script_progression --message="Storing installation settings..." --weight=2
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
-ynh_app_setting_set --app=$app --key=secret --value=$secret
+ynh_app_setting_set --app=$app --key=password --value=$password
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -130,7 +130,7 @@ ynh_script_progression --message="Building $app... (this will take some time and
 pushd "$final_path" || ynh_die
 
 	ynh_use_nodejs
-	
+	 npm i
 	./nodebb setup
 	./nodebb start
 
