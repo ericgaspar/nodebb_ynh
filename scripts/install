@@ -114,6 +114,22 @@ ynh_script_progression --message="Configuring system user..." --weight=3
 ynh_system_user_create --username=$app --home_dir=$final_path
 
 #=================================================
+# MODIFY A CONFIG FILE	
+#=================================================
+ynh_script_progression --message="Modifying a config file..."
+
+cp ../conf/config.json $final_path/config.json
+
+ynh_replace_string --match_string="__DOMAIN__"     --replace_string="$domain"  --target_file="$final_path/config.json"
+ynh_replace_string --match_string="__PORT__"    --replace_string="$port"    --target_file="$final_path/config.json"
+ynh_replace_string --match_string="__PASSWORD__"  --replace_string="$password"  --target_file="$final_path/config.json"
+ynh_replace_string --match_string="__DB_USER__" --replace_string="$db_user" --target_file="$final_path/config.json"
+ynh_replace_string --match_string="__DB_NAME"   --replace_string="$db_name" --target_file="$final_path/config.json"
+ynh_replace_string --match_string="__DB_PWD__"  --replace_string="$db_pwd"  --target_file="$final_path/config.json"
+
+ynh_store_file_checksum --file="$final_path/config.json"
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..." --time --weight=1
@@ -157,21 +173,7 @@ ynh_replace_string --match_string="__NODE__"     --replace_string="$nodejs_path"
 
 ynh_add_systemd_config
 
-#=================================================
-# MODIFY A CONFIG FILE	
-#=================================================
-ynh_script_progression --message="Modifying a config file..."
 
-cp ../conf/config.json $final_path/config.json
-
-ynh_replace_string --match_string="__DOMAIN__"     --replace_string="$domain"  --target_file="$final_path/config.json"
-ynh_replace_string --match_string="__PORT__"    --replace_string="$port"    --target_file="$final_path/config.json"
-ynh_replace_string --match_string="__PASSWORD__"  --replace_string="$password"  --target_file="$final_path/config.json"
-ynh_replace_string --match_string="__DB_USER__" --replace_string="$db_user" --target_file="$final_path/config.json"
-ynh_replace_string --match_string="__DB_NAME"   --replace_string="$db_name" --target_file="$final_path/config.json"
-ynh_replace_string --match_string="__DB_PWD__"  --replace_string="$db_pwd"  --target_file="$final_path/config.json"
-
-ynh_store_file_checksum --file="$final_path/config.json"
 
 #=================================================
 # SECURE FILES AND DIRECTORIES
