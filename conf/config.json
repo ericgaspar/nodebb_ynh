@@ -1,13 +1,16 @@
 {
-    "url": "https://__URL__",
-    "secret": "__SECRET__",
-    "database": "postgres",
+    "url": "https://__DOMAIN__",
+    "secret": "__PASSWORD__",
     "port": "__PORT__",
+    "database": "postgres",
     "postgres": {
         "host": "127.0.0.1",
         "port": "5432",
         "username": "__DB_USER__",
         "password": "__DB_PWD__",
         "database": "__DB_NAME__"
+    },
+    "socket.io": {
+    "origins": "https://__DOMAIN__:*"
     }
 }
