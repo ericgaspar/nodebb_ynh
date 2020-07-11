@@ -124,7 +124,7 @@ pushd "$final_path/nodebb" || ynh_die
 
 	ynh_use_nodejs
 	
-	setup
+	yarn ./nodebb setup
 
 popd || ynh_die
 
