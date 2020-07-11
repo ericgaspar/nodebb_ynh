@@ -128,7 +128,9 @@ chown -R $app:$app $final_path
 ynh_script_progression --message="Building $app... (this will take some time and resources!)" --weight=240
 
 pushd "$final_path" || ynh_die
+
 	./nodebb setup
+	
 popd || ynh_die
 
 #=================================================
