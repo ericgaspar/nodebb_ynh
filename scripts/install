@@ -114,9 +114,16 @@ ynh_script_progression --message="Configuring system user..." --weight=3
 ynh_system_user_create --username=$app --home_dir=$final_path
 
 #=================================================
+# SECURE FILES AND DIRECTORIES
+#=================================================
+ynh_script_progression --message="Securing files and directories..."
+
+chown -R $app:$app $final_path
+
+#=================================================
 # SPECIFIC SETUP
 #==============================================
-# INSTALL CODIMD
+# INSTALL NODEBB
 #==============================================
 ynh_script_progression --message="Building $app... (this will take some time and resources!)" --weight=240
 
@@ -124,7 +131,8 @@ pushd "$final_path" || ynh_die
 
 	ynh_use_nodejs
 	
-	yarn ./nodebb setup
+	./nodebb setup
+	./nodebb start
 
 popd || ynh_die
 
@@ -135,12 +143,12 @@ popd || ynh_die
 #=================================================
 
 # Créer le dossier de log
-mkdir -p /var/log/$app
-touch /var/log/$app/nodebb.log
-install_log=/var/log/$app/installation.log
-touch $install_log
-chown $app -R /var/log/$app
-chown admin -R $install_log
+# mkdir -p /var/log/$app
+# touch /var/log/$app/nodebb.log
+# install_log=/var/log/$app/installation.log
+# touch $install_log
+# chown $app -R /var/log/$app
+# chown admin -R $install_log
 
 #=================================================
 # Add Systemd service
@@ -170,12 +178,7 @@ ynh_store_file_checksum --file="$final_path/config.json"
 
 #=================================================
 # GENERIC FINALIZATION
-#=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-ynh_script_progression --message="Securing files and directories..."
 
-chown -R $app:$app $final_path
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
