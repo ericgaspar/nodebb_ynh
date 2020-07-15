@@ -144,10 +144,8 @@ ynh_add_systemd_config
 ynh_script_progression --message="Building $app... (this will take some time and resources!)" --weight=240
 
 pushd "$final_path" || ynh_die
-
 	ynh_use_nodejs
-	exec_as $app ./nodebb setup -l
-
+	./nodebb setup -l
 popd || ynh_die
 
 #=================================================
