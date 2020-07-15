@@ -23,11 +23,6 @@ nodejs_version=12
 #=================================================
 
 
-
-
-
-#=================================================
-
 # Install or update the main directory yunohost.multimedia
 #
 # usage: ynh_multimedia_build_main_dir
@@ -170,5 +165,3 @@ $(yunohost tools diagnosis | grep -B 100 "services:" | sed '/services:/d')"
 	# Send the email to the recipients
 	echo "$mail_message" | $mail_bin -a "Content-Type: text/plain; charset=UTF-8" -s "$mail_subject" "$recipients"
 }
-
-
