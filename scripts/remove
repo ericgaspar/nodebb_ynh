@@ -85,7 +85,6 @@ ynh_script_progression --message="Removing Nginx web server configuration..." --
 # Remove the dedicated nginx config
 ynh_remove_nginx_config
 
-
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
