@@ -91,7 +91,7 @@ ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --time --weight=1
+ynh_script_progression --message="Setting up source files..." --weight=1
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
@@ -100,7 +100,7 @@ ynh_setup_source --dest_dir=$final_path
 #=================================================
 # Nginx configuration
 #=================================================
-ynh_script_progression --message="Configuring nginx web server..." --time --weight=1
+ynh_script_progression --message="Configuring nginx web server..." --weight=1
 
 # Create a dedicated nginx config
 ynh_add_nginx_config
@@ -132,7 +132,7 @@ ynh_store_file_checksum --file="$final_path/config.json"
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..." --time --weight=1
+ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
 ynh_add_systemd_config
 
