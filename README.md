@@ -52,9 +52,10 @@ Can the app be used by multiple users?
 
 ## Links
 
-- Website of the Yuno-package : https://github.com/YunoHost-Apps/nodebb_ynh
-- Official website : https://nodebb.org
-- Github website : https://github.com/NodeBB/NodeBB/
+ * Report a bug: https://github.com/YunoHost-Apps/nodebb_ynh
+ * App website: https://nodebb.org
+ * Upstream app repository: https://github.com/NodeBB/NodeBB/
+ * YunoHost website: https://yunohost.org/
 
 ---
 

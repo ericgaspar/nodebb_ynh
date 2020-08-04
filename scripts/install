@@ -145,8 +145,8 @@ ynh_script_progression --message="Building $app... (this will take some time and
 
 pushd "$final_path" || ynh_die
 	ynh_use_nodejs
-	exec_as "$app" PATH=$PATH ./nodebb setup -l > $install_log
-	exec_as "$app" PATH=$PATH ./nodebb build -l
+	ynh_exec_as $app PATH=$PATH ./nodebb setup -l > $install_log
+	ynh_exec_as $app PATH=$PATH ./nodebb build -l
 popd || ynh_die
 
 #=================================================
