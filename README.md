@@ -15,7 +15,7 @@ Quick description of this app.
 
 ## Screenshots
 
-![](Link to a screenshot of this app.)
+![](https://nodebb.org/assets/gallery/responsive.png)
 
 ## Demo
 
@@ -27,7 +27,7 @@ How to configure this app: From an admin panel, a plain file with SSH, or any ot
 
 ## Documentation
 
- * Official documentation: Link to the official documentation of this app
+ * Official documentation: https://docs.nodebb.org/
  * YunoHost documentation: If specific documentation is needed, feel free to contribute.
 
 ## YunoHost specific features
