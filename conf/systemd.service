@@ -4,12 +4,12 @@ Documentation=https://docs.nodebb.org
 After=network.target postgresql.service
 
 [Service]
-Type=simple
+Type=forking
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__
 Environment=NODE_ENV=production
-PIDFile=/var/www/nodebb/pidfile
+PIDFile=__FINALPATH__/pidfile
 Environment="PATH=__ENV_PATH__"
 ExecStart=__YNH_NPM__ node loader.js
 StandardOutput=syslog

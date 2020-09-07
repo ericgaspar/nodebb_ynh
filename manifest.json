@@ -6,7 +6,7 @@
         "en": "Nodejs Forum",
         "fr": "Forum écrit en nodejs"
     },
-    "version": "1.14.1~ynh1",
+    "version": "1.14.3~ynh1",
     "url": "https://nodebb.org/",
     "license": "GPL-3.0",
     "maintainer": {
@@ -46,8 +46,8 @@
                 "name": "is_public",
                 "type": "boolean",
                 "ask": {
-                    "en": "Is it a public site? ",
-                    "fr": "Est-ce un site publique ? "
+                    "en": "Is it a public site?",
+                    "fr": "Est-ce un site publique ?"
                 },
                 "default": true
             }
