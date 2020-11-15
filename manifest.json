@@ -6,7 +6,7 @@
         "en": "Nodejs Forum",
         "fr": "Forum écrit en nodejs"
     },
-    "version": "1.14.3~ynh1",
+    "version": "1.15.1~ynh1",
     "url": "https://nodebb.org/",
     "license": "GPL-3.0",
     "maintainer": {
@@ -15,7 +15,7 @@
         "url": "https://github.com/Yunohost-Apps/nodebb_ynh"
     },
     "requirements": {
-        "yunohost": ">> 3.8.1"
+        "yunohost": ">> 4.0.0"
     },
     "multi_instance": false,
     "services": [
